@@ -34,8 +34,8 @@ public static class OcpiService
             .WithEnvironment("MONGO_INITDB_ROOT_USERNAME", "root")
             .WithEnvironment("MONGO_INITDB_ROOT_PASSWORD", "root")
             .WithEnvironment("MONGO_INITDB_DATABASE", "cpo-ocpi-local")
-            .WithWaitStrategy(Wait.ForUnixContainer().UntilContainerIsHealthy())
-            // .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged(mongoConsumer.Stdout, "Waiting for connections"))
+            // .WithWaitStrategy(Wait.ForUnixContainer().UntilContainerIsHealthy())
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged(mongoConsumer.Stdout, "Waiting for connections"))
             .Build();
 
         _ocpiContainer = new ContainerBuilder()
@@ -47,7 +47,7 @@ public static class OcpiService
             // .WithEnvironment("ConnectionStrings__MongoDatabase", $"mongodb://root:root@{mongoContainerName}:27017/")
             // .WithEnvironment("ServiceBusNamespace", "test")
             .WithOutputConsumer(ocpiConsumer)
-            .WithWaitStrategy(Wait.ForUnixContainer().UntilContainerIsHealthy())
+            // .WithWaitStrategy(Wait.ForUnixContainer().UntilContainerIsHealthy())
             // .WithWaitStrategy(Wait.ForUnixContainer().UntilMessageIsLogged(ocpiConsumer.Stdout, "Now listening on"))
             .Build();
     }

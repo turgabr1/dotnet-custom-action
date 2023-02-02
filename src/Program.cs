@@ -23,6 +23,7 @@ namespace dotnet_sample_action
 
                 _core.Debug(DateTime.Now.ToLongTimeString());
                 await Task.Delay(int.Parse(ms));
+                // await Task.Delay(5000);
 
                 CredentialSeeds.ClearCredentials(OcpiService.GetMongoDb()).Wait();
                 OcpiService.StopAsync().Wait();
