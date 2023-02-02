@@ -4,10 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>dotnet_sample_action</RootNamespace>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DotnetActionsToolkit" Version="1.0.11" />
+    <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+    <PackageReference Include="Testcontainers" Version="2.4.0" />
   </ItemGroup>
 
 </Project>

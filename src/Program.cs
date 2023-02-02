@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using dotnet_sample_action.Containers;
+using dotnet_sample_action.Seeds;
 
 namespace dotnet_sample_action
 {
@@ -13,14 +15,20 @@ namespace dotnet_sample_action
         {
             try
             {
-                 var ms = _core.GetInput("milliseconds");
-                 _core.Debug($"Waiting {ms} milliseconds..."); // debug is only output if you set teh secret ACTIONS_RUNNER_DEBUG to true
+                OcpiService.StartAsync().Wait();
+                CredentialSeeds.SeedCredentials(OcpiService.GetMongoDb()).Wait();
+                
+                var ms = _core.GetInput("milliseconds");
+                _core.Debug($"Waiting {ms} milliseconds..."); // debug is only output if you set teh secret ACTIONS_RUNNER_DEBUG to true
 
-                 _core.Debug(DateTime.Now.ToLongTimeString());
-                 await Task.Delay(int.Parse(ms));
-                 _core.Debug(DateTime.Now.ToLongTimeString());
+                _core.Debug(DateTime.Now.ToLongTimeString());
+                await Task.Delay(int.Parse(ms));
+                _core.Debug(DateTime.Now.ToLongTimeString());
 
-                 _core.SetOutput("time", DateTime.Now.ToLongTimeString());
+                _core.SetOutput("time", DateTime.Now.ToLongTimeString());
+                
+                CredentialSeeds.ClearCredentials(OcpiService.GetMongoDb()).Wait();
+                OcpiService.StopAsync().Wait();
             }
             catch (Exception ex)
             {
