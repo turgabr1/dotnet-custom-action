@@ -4,6 +4,7 @@ const path = require('path');
 
 try {
   execSync(path.join(__dirname, 'run-action.ps1'), { stdio: 'inherit', shell: "pwsh" });
+  process.stdout.write("::start::");
 } 
 catch(err) {
   process.exitCode = 1;

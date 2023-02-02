@@ -16,7 +16,7 @@ if($IsMacOS -eq $True)
 }
 
 Write-Output "Running $filePath..."
-& $filePath
+& $filePath | Write-Output
 
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE

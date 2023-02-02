@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using dotnet_sample_action.Helpers;
 using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
 using MongoDB.Driver;
@@ -16,12 +17,14 @@ public static class OcpiService
     private static readonly IContainer _ocpiContainer;
     private static readonly IContainer _mongoContainer;
     private static readonly HttpClient _httpClient = new();
+    public static IOutputConsumer mongoConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
+    public static IOutputConsumer ocpiConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
 
     static OcpiService()
     {
         var mongoContainerName = RandomString.Generate(16);
-        var mongoConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
-        var ocpiConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
+        // var mongoConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
+        // var ocpiConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
         
         _ocpiNetwork = new NetworkBuilder().WithName(Guid.NewGuid().ToString("D")).Build();
         
