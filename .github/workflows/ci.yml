@@ -4,9 +4,6 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  ACTIONS_RUNNER_DEBUG: true
-
 jobs:
   build:
 #    strategy:
