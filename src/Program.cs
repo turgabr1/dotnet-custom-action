@@ -23,12 +23,13 @@ namespace dotnet_sample_action
 
                 _core.Debug(DateTime.Now.ToLongTimeString());
                 await Task.Delay(int.Parse(ms));
+
+                CredentialSeeds.ClearCredentials(OcpiService.GetMongoDb()).Wait();
+                OcpiService.StopAsync().Wait();
+                
                 _core.Debug(DateTime.Now.ToLongTimeString());
 
                 _core.SetOutput("time", DateTime.Now.ToLongTimeString());
-                
-                CredentialSeeds.ClearCredentials(OcpiService.GetMongoDb()).Wait();
-                OcpiService.StopAsync().Wait();
             }
             catch (Exception ex)
             {
