@@ -3,8 +3,9 @@ const os = require('os');
 const path = require('path');
 
 try {
-  execSync(path.join(__dirname, 'run-action.ps1'), { stdio: 'inherit', shell: "pwsh" });
+  var result = execSync(path.join(__dirname, 'run-action.ps1'), { stdio: 'inherit', shell: "pwsh" });
   process.stdout.write("::start::");
+  process.stdout.write(result.toString());
 } 
 catch(err) {
   process.exitCode = 1;
