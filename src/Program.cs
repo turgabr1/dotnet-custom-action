@@ -18,7 +18,8 @@ namespace dotnet_sample_action
             {
                 OcpiService.StartAsync().Wait();
                 CredentialSeeds.SeedCredentials(OcpiService.GetMongoDb()).Wait();
-                
+                _core.Debug(OcpiService._mongoContainer.Name);
+                _core.Debug(OcpiService._ocpiContainer.Name);
                 Console.WriteLine("This is the end");
                 var ms = _core.GetInput("milliseconds");
                 _core.Debug($"Waiting {ms} milliseconds...");
