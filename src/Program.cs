@@ -23,6 +23,12 @@ namespace dotnet_sample_action
                 Console.WriteLine("This is the end");
                 var ms = _core.GetInput("milliseconds");
                 _core.Debug($"Waiting {ms} milliseconds...");
+                _core.Debug($"Waiting {ms} milliseconds...");
+                _core.Debug($"Waiting {ms} milliseconds...");
+                _core.Debug($"Waiting {ms} milliseconds...");
+                _core.Debug($"Waiting {ms} milliseconds...");
+                _core.Debug(OcpiService._mongoContainer.Name);
+                _core.Debug(OcpiService._ocpiContainer.Name);
 
                 _core.Debug(DateTime.Now.ToLongTimeString());
                 await Task.Delay(int.Parse(ms));
