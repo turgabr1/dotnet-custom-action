@@ -14,7 +14,6 @@ namespace dotnet_sample_action.Containers;
 
 public static class OcpiService
 {
-    static readonly Core _core = new Core();
     private static readonly INetwork _ocpiNetwork;
     public static readonly IContainer _ocpiContainer;
     public static readonly IContainer _mongoContainer;
@@ -71,12 +70,9 @@ public static class OcpiService
 
     public static async Task StartAsync()
     {
-        _core.Debug("Start Async");
         await _ocpiNetwork.CreateAsync();
         await _mongoContainer.StartAsync();
         await _ocpiContainer.StartAsync();
-        _core.Debug(_mongoContainer.Name);
-        _core.Debug(_ocpiContainer.Name);
     }
 
     public static async Task StopAsync()
