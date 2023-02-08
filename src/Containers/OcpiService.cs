@@ -7,15 +7,17 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
+using DotnetActionsToolkit;
 using MongoDB.Driver;
 
 namespace dotnet_sample_action.Containers;
 
 public static class OcpiService
 {
+    static readonly Core _core = new Core();
     private static readonly INetwork _ocpiNetwork;
-    private static readonly IContainer _ocpiContainer;
-    private static readonly IContainer _mongoContainer;
+    public static readonly IContainer _ocpiContainer;
+    public static readonly IContainer _mongoContainer;
     private static readonly HttpClient _httpClient = new();
     public static IOutputConsumer mongoConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
     public static IOutputConsumer ocpiConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
@@ -69,9 +71,12 @@ public static class OcpiService
 
     public static async Task StartAsync()
     {
+        _core.Debug("Start Async");
         await _ocpiNetwork.CreateAsync();
         await _mongoContainer.StartAsync();
         await _ocpiContainer.StartAsync();
+        _core.Debug(_mongoContainer.Name);
+        _core.Debug(_ocpiContainer.Name);
     }
 
     public static async Task StopAsync()
