@@ -1,48 +1,37 @@
-﻿using DotnetActionsToolkit;
+﻿
 using System;
 using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using dotnet_sample_action.Containers;
-using dotnet_sample_action.Seeds;
+using DotnetActionsToolkit;
 
 namespace dotnet_sample_action
 {
     public class Program
     {
-        static readonly Core _core = new Core();
+        static readonly Core _core = new();
 
         static async Task Main(string[] args)
         {
             try
             {
-                OcpiService.StartAsync().Wait();
-                CredentialSeeds.SeedCredentials(OcpiService.GetMongoDb()).Wait();
-                _core.Info(OcpiService._mongoContainer.Name);
-                _core.Info(OcpiService._ocpiContainer.Name);
-                Console.WriteLine("This is the end");
+                Service.StartAsync().Wait();
+                
                 var ms = _core.GetInput("milliseconds");
-                _core.Info($"Waiting {ms} milliseconds...");
-                _core.Info($"Waiting {ms} milliseconds...");
-                _core.Info($"Waiting {ms} milliseconds...");
-                _core.Info($"Waiting {ms} milliseconds...");
-                _core.Info($"Waiting {ms} milliseconds...");
-                _core.Info(OcpiService._mongoContainer.Name);
-                _core.Info(OcpiService._ocpiContainer.Name);
 
                 _core.Debug(DateTime.Now.ToLongTimeString());
                 await Task.Delay(int.Parse(ms));
-                // await Task.Delay(5000);
-                using var ocpiStdoutReader = new StreamReader(OcpiService.ocpiConsumer.Stdout);
+
+                using var ocpiStdoutReader = new StreamReader(Service.Consumer.Stdout);
                 var ocpiStdout = ocpiStdoutReader.ReadToEnd();
                 _core.Debug(ocpiStdout);
                 
-                using var stdoutReader = new StreamReader(OcpiService.mongoConsumer.Stdout);
+                using var stdoutReader = new StreamReader(Service.mongoConsumer.Stdout);
                 var stdout = stdoutReader.ReadToEnd();
                 _core.Debug(stdout);
 
-                CredentialSeeds.ClearCredentials(OcpiService.GetMongoDb()).Wait();
-                OcpiService.StopAsync().Wait();
+                Service.StopAsync().Wait();
                 
                 _core.Debug(DateTime.Now.ToLongTimeString());
 
