@@ -35,7 +35,7 @@ namespace dotnet_sample_action
                 
                 _core.Debug(DateTime.Now.ToLongTimeString());
 
-                _core.SetOutput("time", DateTime.Now.ToLongTimeString());
+                _core.SetOutput("Mongocontainer", Service._mongoContainer.Name);
                 Console.WriteLine("This is the end");
             }
             catch (Exception ex)

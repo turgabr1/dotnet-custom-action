@@ -10,8 +10,8 @@ runs:
         milliseconds: 120000
     - name: Test Outputs
       run: |
-        if ("${{ steps.sample.outputs.time }}") {
-          Write-Output "Output Value Found [${{ steps.sample.outputs.time }}]"
+        if ("${{ steps.sample.outputs.Mongocontainer }}") {
+          Write-Output "Output Value Found [${{ steps.sample.outputs.Mongocontainer }}]"
         } else {
           Write-Error "No output value found"
           exit 1
